@@ -1,15 +1,20 @@
 <script setup>
 import { computed } from 'vue';
+import { useSessionStore } from '@/store/session';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
+const sessionStore = useSessionStore();
 
 const props = defineProps({
   post: {
     type: Object,
     required: true
   }
+})
+
+const isOwnPost = computed(() => {
+  return sessionStore.isLogged() && sessionStore.getUser().id === props.post.userId;
 })
 
 const emit = defineEmits(['delete'])
@@ -47,7 +52,8 @@ function goToPostDetail() {
         <span class="icon">💬 {{ props.post.nReplies }}</span>
       </div>
       <div class="interactions__actions">
-        <button class="interactions__delete icon" type="button" aria-label="Delete" @click="emit('delete')">🗑️</button>
+        <button v-if="isOwnPost" class="interactions__delete icon" type="button" aria-label="Delete"
+          @click="emit('delete')">🗑️</button>
       </div>
     </section>
   </article>

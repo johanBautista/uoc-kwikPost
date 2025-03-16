@@ -3,18 +3,13 @@ import { onMounted, ref } from 'vue'
 import { useSessionStore } from '@/store/session'
 import { useRoute } from 'vue-router'
 import PaginatedPosts from '@/components/PaginatedPosts.vue';
-import Loading from '@/components/Loading.vue';
 import { fetchUserByUsername, fetchPostsByUsername } from '@/api';
 
 const route = useRoute()
 const sessionStore = useSessionStore()
 const { username } = route.params
-const isLoading = ref(true)
-const postsList = ref([])
 const user = ref({})
-const postsPerPage = 10
-const page = ref(1)
-const totalPosts = ref(0)
+const isNoPosts = ref(false)
 
 async function getUser() {
   try {
@@ -25,31 +20,11 @@ async function getUser() {
   }
 }
 
-async function getPosts() {
-  isLoading.value = true
-  try {
-    const { data: { paginator, result } } = await fetchPostsByUsername(username, { limit: postsPerPage, offset: (page.value - 1) * 10 })
-    postsList.value = result || []
-    totalPosts.value = paginator.total
-
-  } catch (error) {
-    console.error(error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-async function getMorePosts() {
-  page.value++
-  await getPosts()
-}
-
 onMounted(async () => {
-  await Promise.all([getUser(), getPosts()])
+  await getUser()
 })
-
-
 </script>
+
 <template>
   <header class="user-info">
     <img class="user-info__avatar" :src="user.profileImg" alt="avatar" />
@@ -63,11 +38,10 @@ onMounted(async () => {
     </small>
     <button type="button" aria-label="Logout" class="btn btn--logout" @click="sessionStore.logout()">↪</button>
   </header>
-  <section class=" posts-list">
-    <Loading v-if="isLoading" />
-    <PaginatedPosts v-else-if="postsList.length" :posts-list="postsList" :total-posts="totalPosts"
-      @load-more="getMorePosts()" />
-    <small v-else>This user has not shared anything yet</small>
+  <section class="posts-list">
+    <PaginatedPosts :fetch-posts-function="fetchPostsByUsername" :function-params="{ username }"
+      @no-posts="isNoPosts = true" />
+    <small v-if="isNoPosts">This user has not shared anything yet</small>
   </section>
 </template>
 

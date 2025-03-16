@@ -45,7 +45,7 @@ function fetchUserByUsername(username) {
   return coreApi.get(`/user/${username}`);
 }
 
-function fetchPostsByUsername(username, { limit, offset }) {
+function fetchPostsByUsername({ username, limit, offset }) {
   const query = {
     params: {
       limit,
