@@ -1,20 +1,14 @@
 <script setup>
 import { computed } from 'vue';
-import { useSessionStore } from '@/store/session';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const sessionStore = useSessionStore();
 
 const props = defineProps({
   post: {
     type: Object,
     required: true
   }
-})
-
-const isOwnPost = computed(() => {
-  return sessionStore.isLogged() && sessionStore.getUser().id === props.post.userId;
 })
 
 const emit = defineEmits(['delete'])
@@ -47,14 +41,8 @@ function goToPostDetail() {
       <time class="has-color-light">{{ formattedDate }}</time>
     </main>
     <section class="interactions" @click="goToPostDetail()">
-      <div class="interactions__info">
-        <span class="icon">❤ {{ props.post.nLikes }}</span>
-        <span class="icon">💬 {{ props.post.nReplies }}</span>
-      </div>
-      <div class="interactions__actions">
-        <button v-if="isOwnPost" class="interactions__delete icon" type="button" aria-label="Delete"
-          @click="emit('delete')">🗑️</button>
-      </div>
+      <span class="icon">❤ {{ props.post.nLikes }}</span>
+      <span class="icon">💬 {{ props.post.nReplies }}</span>
     </section>
   </article>
 </template>
@@ -110,12 +98,6 @@ main time {
 /* Contains likes and replies count and buttons*/
 .interactions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.interactions__info {
-  display: flex;
   justify-content: flex-start;
   gap: 10px;
 }
@@ -123,9 +105,5 @@ main time {
 .interactions .icon {
   font-size: 12px;
   color: #555;
-}
-
-.interactions__delete {
-  justify-self: end;
 }
 </style>

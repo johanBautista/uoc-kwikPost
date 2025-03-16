@@ -1,10 +1,15 @@
 <script setup>
-import { useRoute } from 'vue-router'
-import { ref, onMounted } from 'vue'
-import { fetchPostById } from '@/api'
+import { useRoute, useRouter } from 'vue-router'
+import { useSessionStore } from '@/store/session';
+import { ref, onMounted, computed } from 'vue'
+import { fetchPostById, deletePost } from '@/api'
+
 import PostCard from '@/components/PostCard.vue'
 
 const route = useRoute()
+const router = useRouter()
+const sessionStore = useSessionStore();
+
 const postId = route.params.id
 
 const post = ref({})
@@ -18,12 +23,28 @@ async function getPost() {
   }
 }
 
+async function onDeletePost() {
+  try {
+    await deletePost(postId)
+    router.push({ name: 'home' })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const isOwnPost = computed(() => {
+  return sessionStore.isLogged() && sessionStore.getUser().id === post.value.userId;
+})
+
+
 onMounted(async () => {
   await getPost();
 })
 </script>
 
 <template>
+  <button v-if="isOwnPost" class="interactions__delete icon" type="button" aria-label="Delete"
+    @click="onDeletePost()">🗑️</button>
   <PostCard class="main-post" :post="post" />
   <ul class="replies-list">
     <li v-for="reply in post.replies" :key="reply.id">
