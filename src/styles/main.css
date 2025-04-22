@@ -135,16 +135,32 @@ button {
   border-radius: 4px;
   cursor: pointer;
   min-width: 100px;
-  background-color: #1a1d52;
+  background-color: var(--secondary-color);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.btn--cta {
-  background-color: #646cff;
+.btn:hover {
+  filter: brightness(1.2);
   color: white;
+}
+
+.btn--cta {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn--circle {
+  --size: 30px;
+  border-radius: 50%;
+  width: var(--size);
+  max-width: var(--size);
+  min-width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  padding: 0;
 }
 
 /* Form */
@@ -167,8 +183,8 @@ select {
   min-height: 2rem;
 }
 
-input::placeholder, textarea::placeholder {
-  font-family: "Lexend Deca", system-ui, Avenir, Helvetica, Arial, sans-serif;
+input::placeholder, textarea::placeholder, textarea {
+  font-family: var(--font-family);
   color: grey;
 }
 
