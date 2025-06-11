@@ -1,6 +1,18 @@
 <template>
-  <h1 class="header">🥏 KiwikPost</h1>
+  <div class="header">
+    <h1>🥏 KiwikPost</h1>
+    <router-link v-if="isUserAuth" class="btn new-post" to="/new-post"
+      >✎</router-link
+    >
+  </div>
 </template>
+<script setup>
+import { computed } from "vue";
+import { useUserStore } from "../../stores/userStore";
+
+const store = useUserStore();
+const isUserAuth = computed(() => store.isAuthenticated);
+</script>
 <style>
 .header {
   padding: 10px;
@@ -12,6 +24,10 @@
 }
 
 .btn.new-post {
+  background: var(--secondary-color);
+  color: white;
+  padding: 0px 8px;
+  border-radius: 50%;
   position: absolute;
   right: 10px;
   top: 10px;

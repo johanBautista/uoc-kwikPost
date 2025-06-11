@@ -5,21 +5,23 @@
 
     <form @submit.prevent="handleSubmit" class="login-form">
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="username">Nombre de usuario:</label>
         <input
           type="text"
-          id="email"
-          v-model="email"
-          @blur="validateEmail"
-          @input="validateEmail"
+          id="username"
+          v-model="username"
+          @blur="validateUsername"
+          @input="validateUsername"
           :class="{
-            'is-invalid': emailError,
-            'is-valid': !emailError && email,
+            'is-invalid': usernameError,
+            'is-valid': !usernameError && username,
           }"
-          placeholder="email@ejemplo.com"
+          placeholder="Tu nombre de usuario"
           required
         />
-        <div v-if="emailError" class="error-message">{{ emailError }}</div>
+        <div v-if="usernameError" class="error-message">
+          {{ usernameError }}
+        </div>
       </div>
 
       <div class="form-group">
@@ -50,20 +52,30 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { isValidEmail, isValidPassword } from "../../utils/loginFormValidator";
+import {
+  isValidPassword,
+  isValidUsername,
+} from "../../utils/loginFormValidator";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../../stores/userStore";
 
-const email = ref("");
+const username = ref("");
 const password = ref("");
-const emailError = ref("");
+const usernameError = ref("");
 const passwordError = ref("");
+const error = ref("");
 
-const validateEmail = () => {
-  if (!email.value) {
-    emailError.value = "El email es obligatorio.";
-  } else if (!isValidEmail(email.value)) {
-    emailError.value = "Por favor, introduce un email válido.";
+const store = useUserStore();
+const router = useRouter();
+
+const validateUsername = () => {
+  if (!username.value) {
+    usernameError.value = "El nombre de usuario es obligatorio.";
+  } else if (!isValidUsername(username.value)) {
+    usernameError.value =
+      "El nombre de usuario debe tener al menos 3 caracteres.";
   } else {
-    emailError.value = "";
+    usernameError.value = "";
   }
 };
 
@@ -80,23 +92,30 @@ const validatePassword = () => {
 
 const isFormValid = computed(() => {
   return (
-    !emailError.value && email.value && !passwordError.value && password.value
+    !usernameError.value &&
+    username.value &&
+    !passwordError.value &&
+    password.value
   );
 });
 
-const handleSubmit = () => {
-  validateEmail();
+const handleSubmit = async () => {
+  validateUsername();
   validatePassword();
 
   if (isFormValid.value) {
     console.log("Formulario de login válido. Enviando datos...", {
-      email: email.value,
+      username: username.value,
       password: password.value,
     });
-    // Aquí puedes realizar tu lógica de autenticación:
-    // - Llamada a una API (e.g., fetch, axios)
-    // - Redirección
-    // - Actualización del estado global de autenticación
+
+    try {
+      error.value = "";
+      await store.login(username.value, password.value);
+      router.push("/profile");
+    } catch (err) {
+      error.value = err.message || "Error al iniciar sesión";
+    }
   } else {
     console.log("Formulario de login inválido. Por favor, revisa los errores.");
   }

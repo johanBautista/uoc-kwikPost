@@ -1,9 +1,21 @@
 <template>
   <div class="menu">
     <router-link class="menu-link" to="/">🏠︎</router-link>
-    <router-link class="menu-link" to="/login">🗣</router-link>
+    <router-link class="menu-link" to="/login">
+      <template v-if="isUserAuth">
+        <img :src="store.user.profileImg" class="profile-img" alt="Avatar" />
+      </template>
+      <template v-else> 🗣 </template>
+    </router-link>
   </div>
 </template>
+<script setup>
+import { computed } from "vue";
+import { useUserStore } from "../../stores/userStore";
+
+const store = useUserStore();
+const isUserAuth = computed(() => store.isAuthenticated);
+</script>
 <style>
 .menu {
   display: flex;
