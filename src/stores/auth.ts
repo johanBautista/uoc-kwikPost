@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { IAuthState } from "../utils/interfaces";
+import { BASE_URL } from "../utils/constants";
 
 export const useAuthStore = defineStore("auth", {
   state: (): IAuthState => ({
@@ -10,7 +11,7 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     async login(username: string, password: string) {
       try {
-        const res = await fetch("http://localhost:3000/login", {
+        const res = await fetch(`${BASE_URL}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
@@ -33,21 +34,5 @@ export const useAuthStore = defineStore("auth", {
       this.user = null;
       this.isAuthenticated = false;
     },
-    // async fetchUser(userId: string) {
-    //   if (!this.token) {
-    //     throw new Error("No token, usuario no autenticado");
-    //   }
-    //   console.log("user", this.token);
-
-    //   const res = await fetch(`http://localhost:3000/user/${userId}`, {
-    //     headers: { Authorization: `Bearer ${this.token}` },
-    //   });
-
-    //   if (!res.ok) throw new Error("Error al obtener los datos del usuario");
-
-    //   const data = await res.json();
-    //   this.user = data;
-    //   console.log("Datos del usuario obtenidos:", data);
-    // },
   },
 });

@@ -12,6 +12,13 @@ export interface IPostsState {
   loading: boolean;
   error: string | null;
 }
+export interface IUserState {
+  user: User | null;
+  posts: Post[];
+  paginator: Paginator;
+  loading: boolean;
+  error: string | null;
+}
 
 ///////////////////////
 // api response auth
@@ -51,4 +58,15 @@ export interface Paginator {
 export interface PostsResponse {
   paginator: Paginator;
   result: Post[];
+}
+
+export interface UserResponse {
+  id: string;
+  name: string;
+  profileImg: string;
+  registrationDate: string;
+  surname: string;
+  username: string;
+  password?: string;
+  bio?: string;
 }

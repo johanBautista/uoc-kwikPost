@@ -1,12 +1,23 @@
 <template>
   <div>
-    <h2 class="">Feed</h2>
+    <h2 class="">Tus Posts</h2>
 
     <div v-if="loading" class="loader">Cargando...</div>
 
     <ul v-else class="post">
       <li v-for="post in posts" :key="post.id" class="mb-2">
-        <Post :post="post" />
+        <div class="post-card">
+          <div class="post-content">{{ post.content }}</div>
+          <div class="post-date">
+            {{ new Date(post.publishDate).toLocaleDateString() }}
+          </div>
+          <div class="post-stats">
+            <span class="likes"
+              ><span class="likes-icon"> ❤ </span> {{ post.nLikes }}</span
+            >
+            <span class="replies">💬 {{ post.nReplies }}</span>
+          </div>
+        </div>
       </li>
     </ul>
 
@@ -21,17 +32,17 @@
 
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
-import { usePostsStore } from "../../stores/posts";
-import Post from "../post/Post.vue";
+import { useUserStore } from "../../stores/user";
 
-const postsStore = usePostsStore();
-const { fetchPosts } = postsStore;
-
-onMounted(() => {
-  fetchPosts();
-});
+const postsStore = useUserStore();
+const { fetchUserPosts } = postsStore;
 
 const posts = computed(() => postsStore.posts);
+
+onMounted(() => {
+  fetchUserPosts();
+});
+
 const paginator = computed(() => postsStore.paginator);
 const loading = computed(() => postsStore.loading);
 
@@ -41,20 +52,16 @@ const hasNextPage = computed(
 
 function nextPage() {
   const newOffset = paginator.value.offset + paginator.value.limit;
-  fetchPosts(newOffset);
+  fetchUserPosts(newOffset);
 }
 
 function prevPage() {
   const newOffset = Math.max(0, paginator.value.offset - paginator.value.limit);
-  fetchPosts(newOffset);
+  fetchUserPosts(newOffset);
 }
 </script>
 
 <style scoped>
-/* button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-} */
 .post {
   display: flex;
   flex-direction: column;
@@ -132,5 +139,36 @@ ul {
   background-color: var(--light-color);
   cursor: not-allowed;
   color: var(--grey-color);
+}
+
+.post-card {
+  max-width: 500px;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  font-family: sans-serif;
+}
+
+.post-content {
+  font-size: 16px;
+  color: var(--grey-color);
+  margin: 8px 0;
+}
+
+.post-date {
+  font-size: 14px;
+  color: var(--light-color);
+  margin-bottom: 12px;
+}
+
+.post-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  color: #444;
+}
+.likes-icon {
+  font-size: 1rem;
+  color: var(--error-color);
 }
 </style>
