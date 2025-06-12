@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
-import { UserStoreState } from "../utils/interfaces";
+import { IAuthState } from "../utils/interfaces";
 
-export const useUserStore = defineStore("userStore", {
-  state: (): UserStoreState => ({
+export const useAuthStore = defineStore("auth", {
+  state: (): IAuthState => ({
     isAuthenticated: false,
     token: null,
     user: null as any,

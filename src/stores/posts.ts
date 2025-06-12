@@ -27,7 +27,6 @@ export const usePostsStore = defineStore("posts", {
         const data: PostsResponse = await response.json();
         this.posts = data.result;
         this.paginator = data.paginator;
-        console.log("Posts cargados:", this.posts);
       } catch (err: any) {
         this.error = err.message || "Error desconocido";
       } finally {

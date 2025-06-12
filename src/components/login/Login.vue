@@ -57,7 +57,7 @@ import {
   isValidUsername,
 } from "../../utils/loginFormValidator";
 import { useRouter } from "vue-router";
-import { useUserStore } from "../../stores/userStore";
+import { useAuthStore } from "../../stores/auth";
 
 const username = ref("");
 const password = ref("");
@@ -65,7 +65,7 @@ const usernameError = ref("");
 const passwordError = ref("");
 const error = ref("");
 
-const store = useUserStore();
+const authStore = useAuthStore();
 const router = useRouter();
 
 const validateUsername = () => {
@@ -104,14 +104,9 @@ const handleSubmit = async () => {
   validatePassword();
 
   if (isFormValid.value) {
-    console.log("Formulario de login válido. Enviando datos...", {
-      username: username.value,
-      password: password.value,
-    });
-
     try {
       error.value = "";
-      await store.login(username.value, password.value);
+      await authStore.login(username.value, password.value);
       router.push("/profile");
     } catch (err) {
       error.value = err.message || "Error al iniciar sesión";

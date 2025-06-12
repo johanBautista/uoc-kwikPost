@@ -26,7 +26,6 @@ import { Post } from "../../utils/interfaces";
 const props = defineProps<{
   post: Post;
 }>();
-console.log("Post component loaded with post:", props.post);
 </script>
 <style>
 .post-card {

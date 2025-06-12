@@ -1,9 +1,25 @@
-export interface UserStoreState {
+///////////////////////
+// state interfaces stores
+///////////////////////
+export interface IAuthState {
   user: User | null;
   isAuthenticated: boolean;
   token: string | null;
 }
+export interface IPostsState {
+  posts: Post[];
+  paginator: Paginator;
+  loading: boolean;
+  error: string | null;
+}
 
+///////////////////////
+// api response auth
+///////////////////////
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
 export interface User {
   id: string;
   name: string;

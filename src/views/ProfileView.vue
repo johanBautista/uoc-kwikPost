@@ -1,13 +1,13 @@
 <template>
   <h1>hola perfil</h1>
-  <div v-if="store.user.name">
-    <h2>Bienvenido, {{ store.user.name }}</h2>
-    <img :src="store.user.profileImg" alt="Avatar" />
+  <div v-if="authStore.user.name">
+    <h2>Bienvenido, {{ authStore.user.name }}</h2>
+    <img :src="authStore.user.profileImg" alt="Avatar" />
   </div>
 </template>
 
 <script setup>
-import { useUserStore } from "../stores/userStore";
+import { useAuthStore } from "../stores/auth";
 
-const store = useUserStore();
+const authStore = useAuthStore();
 </script>

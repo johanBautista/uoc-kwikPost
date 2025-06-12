@@ -3,7 +3,11 @@
     <router-link class="menu-link" to="/">🏠︎</router-link>
     <router-link class="menu-link" to="/login">
       <template v-if="isUserAuth">
-        <img :src="store.user.profileImg" class="profile-img" alt="Avatar" />
+        <img
+          :src="authStore.user.profileImg"
+          class="profile-img"
+          alt="Avatar"
+        />
       </template>
       <template v-else> 🗣 </template>
     </router-link>
@@ -11,10 +15,10 @@
 </template>
 <script setup>
 import { computed } from "vue";
-import { useUserStore } from "../../stores/userStore";
+import { useAuthStore } from "../../stores/auth";
 
-const store = useUserStore();
-const isUserAuth = computed(() => store.isAuthenticated);
+const authStore = useAuthStore();
+const isUserAuth = computed(() => authStore.isAuthenticated);
 </script>
 <style>
 .menu {
