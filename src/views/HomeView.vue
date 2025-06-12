@@ -1,5 +1,7 @@
 <template>
-  <h1>Home view</h1>
+  <PostList />
 </template>
 
-<script setup></script>
+<script setup>
+import PostList from "../components/posts-list/PostList.vue";
+</script>

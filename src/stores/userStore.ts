@@ -33,5 +33,21 @@ export const useUserStore = defineStore("userStore", {
       this.user = null;
       this.isAuthenticated = false;
     },
+    // async fetchUser(userId: string) {
+    //   if (!this.token) {
+    //     throw new Error("No token, usuario no autenticado");
+    //   }
+    //   console.log("user", this.token);
+
+    //   const res = await fetch(`http://localhost:3000/user/${userId}`, {
+    //     headers: { Authorization: `Bearer ${this.token}` },
+    //   });
+
+    //   if (!res.ok) throw new Error("Error al obtener los datos del usuario");
+
+    //   const data = await res.json();
+    //   this.user = data;
+    //   console.log("Datos del usuario obtenidos:", data);
+    // },
   },
 });
