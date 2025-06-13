@@ -31,6 +31,12 @@ const router = createRouter({
       component: () => import("../views/NewPostView.vue"),
       meta: { requiresAuth: true },
     },
+    {
+      path: "/post-detail/:id",
+      name: "post-detail",
+      component: () => import("../views/PostDetailView.vue"),
+      meta: { requiresAuth: true },
+    },
   ],
 });
 

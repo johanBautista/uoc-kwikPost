@@ -1,22 +1,24 @@
 <template>
   <div class="post-card">
-    <div class="post-header">
+    <router-link :to="`/profile`" class="post-header">
       <img class="avatar" :src="post.user.profileImg" alt="Image user" />
       <div class="user-info">
         <div class="name">{{ post.user.name }} {{ post.user.surname }}</div>
         <div class="username">@{{ post.user.username }}</div>
       </div>
-    </div>
-    <div class="post-content">{{ post.content }}</div>
-    <div class="post-date">
-      {{ new Date(post.publishDate).toLocaleDateString() }}
-    </div>
-    <div class="post-stats">
-      <span class="likes"
-        ><span class="likes-icon"> ❤ </span> {{ post.nLikes }}</span
-      >
-      <span class="replies">💬 {{ post.nReplies }}</span>
-    </div>
+    </router-link>
+    <router-link :to="`/post-detail/${post.id}`">
+      <div class="post-content">{{ post.content }}</div>
+      <div class="post-date">
+        {{ new Date(post.publishDate).toLocaleDateString() }}
+      </div>
+      <div class="post-stats">
+        <span class="likes"
+          ><span class="likes-icon"> ❤ </span> {{ post.nLikes }}</span
+        >
+        <span class="replies">💬 {{ post.nReplies }}</span>
+      </div>
+    </router-link>
   </div>
 </template>
 <script setup lang="ts">

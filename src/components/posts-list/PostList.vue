@@ -61,7 +61,6 @@ function prevPage() {
   padding: 10px;
   background-color: #fff;
   position: relative;
-  cursor: pointer;
 }
 
 .post a {
