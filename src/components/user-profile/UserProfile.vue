@@ -9,20 +9,27 @@
       <h2>{{ user.name }} {{ user.surname }}</h2>
       <p class="username">@{{ user.username }}</p>
       <p class="bio">{{ user.bio }}</p>
-      <p class="date">Joined on {{ formattedDate }}</p>
+      <p class="date">
+        Joined on {{ new Date(user.registrationDate).toLocaleDateString() }}
+      </p>
     </div>
-    <div class="edit-button">𓉞</div>
+    <div v-if="isCurrentUser" class="edit-button">𓉞</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { computed, defineProps } from "vue";
 import { UserResponse } from "../../utils/interfaces";
+import { useAuthStore } from "../../stores/auth";
 
 const props = defineProps<{
   user: UserResponse;
 }>();
-console.log(props.user, 777);
+
+const authStore = useAuthStore();
+const isCurrentUser = computed(
+  () => authStore.user?.username === props.user.username
+);
 </script>
 
 <style scoped>

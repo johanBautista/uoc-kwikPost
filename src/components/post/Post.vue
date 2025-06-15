@@ -1,6 +1,6 @@
 <template>
   <div class="post-card">
-    <router-link :to="`/profile`" class="post-header">
+    <router-link :to="`/profile/${post.user.username}`" class="post-header">
       <img class="avatar" :src="post.user.profileImg" alt="Image user" />
       <div class="user-info">
         <div class="name">{{ post.user.name }} {{ post.user.surname }}</div>

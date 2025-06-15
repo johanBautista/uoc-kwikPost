@@ -4,22 +4,28 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { useUserStore } from "../stores/user";
-import { useAuthStore } from "../stores/auth";
 import UserProfile from "../components/user-profile/UserProfile.vue";
 import PostsUser from "../components/posts-user/PostsUser.vue";
+import { useRoute } from "vue-router";
 
 const userStore = useUserStore();
-const authStore = useAuthStore();
+const route = useRoute();
 const { fetchUserData } = userStore;
 
 const user = computed(() => userStore.user);
-const userId = authStore.user?.username;
+const username = computed(() => route.params.username);
 
 onMounted(() => {
-  if (userId) {
-    fetchUserData(userId);
+  if (username.value) {
+    fetchUserData(username.value);
+  }
+});
+
+watch(username, (newUsername, oldUsername) => {
+  if (newUsername !== oldUsername) {
+    fetchUserData(newUsername);
   }
 });
 </script>

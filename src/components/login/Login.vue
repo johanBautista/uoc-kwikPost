@@ -107,7 +107,7 @@ const handleSubmit = async () => {
     try {
       error.value = "";
       await authStore.login(username.value, password.value);
-      router.push("/profile");
+      router.push(`/profile/${authStore.user.username}`);
     } catch (err) {
       error.value = err.message || "Error al iniciar sesión";
     }

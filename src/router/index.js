@@ -20,7 +20,7 @@ const router = createRouter({
       component: () => import("../views/LoginView.vue"),
     },
     {
-      path: "/profile",
+      path: "/profile/:username",
       name: "profile",
       component: () => import("../views/ProfileView.vue"),
       meta: { requiresAuth: true },
@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
     next("/login");
   }
   if (to.path === "/login" && authStore.token) {
-    return next("/profile");
+    return next("/profile/" + authStore.user.username);
   }
   next();
 });
