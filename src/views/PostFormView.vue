@@ -1,7 +1,13 @@
 <template>
   <div class="container">
     <h2>{{ isEdit ? "Editar Post" : "Crear Nuevo Post" }}</h2>
-    <PostForm :initialContent="post?.content || ''" @submit="handleSubmit" />
+    <!-- <PostForm :initialContent="post?.content || ''" @submit="handleSubmit" /> -->
+
+    <PostForm
+      v-if="!isEdit || post"
+      :initialContent="post?.content || ''"
+      @submit="handleSubmit"
+    />
   </div>
 </template>
 
@@ -16,7 +22,12 @@ const router = useRouter();
 const postsStore = usePostsStore();
 
 const postId = route.params.id as string | undefined;
-const post = ref(null);
+interface Post {
+  id: string;
+  content: string;
+}
+
+const post = ref<Post | null>(null);
 const isEdit = !!postId;
 
 onMounted(async () => {

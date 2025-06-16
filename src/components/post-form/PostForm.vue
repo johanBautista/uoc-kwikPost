@@ -22,17 +22,26 @@ const emit = defineEmits<{
 
 const content = ref(props.initialContent);
 
-watch(
-  () => props.initialContent,
-  (newVal) => {
-    content.value = newVal;
-  }
-);
+// watch(
+//   () => props.initialContent,
+//   (newVal) => {
+//     content.value = newVal;
+//   }
+// );
 
 const handleSubmit = () => {
   if (!content.value.trim()) return;
   emit("submit", content.value);
 };
+
+watch(
+  () => props.initialContent,
+  (newVal) => {
+    if (newVal !== content.value) {
+      content.value = newVal;
+    }
+  }
+);
 </script>
 <style scoped>
 .post-form {
@@ -61,12 +70,12 @@ const handleSubmit = () => {
 
 .post-textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: var(--primary-color);
 }
 
 .post-button {
   align-self: flex-end;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   color: white;
   font-weight: bold;
   padding: 8px 16px;
@@ -77,6 +86,7 @@ const handleSubmit = () => {
 }
 
 .post-button:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-color-dark);
+  transition: background-color 0.2s ease;
 }
 </style>

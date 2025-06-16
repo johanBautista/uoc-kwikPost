@@ -1,7 +1,10 @@
 <template>
   <div class="header">
     <h1 class="header-title">🥏 KiwikPost</h1>
-    <router-link v-if="isUserAuth" class="btn new-post" to="/new-post"
+    <router-link
+      v-if="isUserAuth"
+      class="btn new-post"
+      :to="{ name: 'post-create' }"
       >✎</router-link
     >
   </div>
