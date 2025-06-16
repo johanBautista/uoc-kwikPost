@@ -46,6 +46,7 @@ export interface Post {
   publishDate: string;
   nLikes: number;
   nReplies: number;
+  replies: Post[];
   user: User;
 }
 
