@@ -77,8 +77,6 @@ const loading = ref(true);
 async function fetchPost() {
   const postId = route.params.id as string;
   post.value = await postsStore.getPostById(postId);
-  console.log("Post fetched:", post.value);
-
   loading.value = false;
 }
 

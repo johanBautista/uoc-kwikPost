@@ -13,7 +13,9 @@
         Joined on {{ new Date(user.registrationDate).toLocaleDateString() }}
       </p>
     </div>
-    <div v-if="isCurrentUser" class="edit-button">𓉞</div>
+    <div v-if="isCurrentUser" title="Edita tu perfil" class="edit-button">
+      𓉞
+    </div>
   </div>
 </template>
 

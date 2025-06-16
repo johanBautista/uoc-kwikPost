@@ -51,10 +51,6 @@ function prevPage() {
 </script>
 
 <style scoped>
-/* button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-} */
 .post {
   display: flex;
   flex-direction: column;
@@ -77,7 +73,6 @@ ul {
   padding-inline-start: 0px;
 }
 
-/* Loader */
 .loader {
   display: flex;
   align-items: center;
@@ -104,7 +99,6 @@ ul {
   }
 }
 
-/* Pagination Buttons */
 .pagination {
   display: flex;
   justify-content: center;

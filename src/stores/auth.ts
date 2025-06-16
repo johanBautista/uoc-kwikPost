@@ -20,8 +20,6 @@ export const useAuthStore = defineStore("auth", {
         if (!res.ok) throw new Error("Login incorrecto");
 
         const data = await res.json();
-        console.log("Login exitoso:", data);
-
         this.token = data.token;
         this.user = data.user;
         this.isAuthenticated = true;

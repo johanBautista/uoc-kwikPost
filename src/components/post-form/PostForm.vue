@@ -22,13 +22,6 @@ const emit = defineEmits<{
 
 const content = ref(props.initialContent);
 
-// watch(
-//   () => props.initialContent,
-//   (newVal) => {
-//     content.value = newVal;
-//   }
-// );
-
 const handleSubmit = () => {
   if (!content.value.trim()) return;
   emit("submit", content.value);

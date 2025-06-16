@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <h2>{{ isEdit ? "Editar Post" : "Crear Nuevo Post" }}</h2>
-    <!-- <PostForm :initialContent="post?.content || ''" @submit="handleSubmit" /> -->
 
     <PostForm
       v-if="!isEdit || post"

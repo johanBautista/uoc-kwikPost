@@ -85,7 +85,6 @@ ul {
   padding-inline-start: 0px;
 }
 
-/* Loader */
 .loader {
   display: flex;
   align-items: center;
@@ -112,7 +111,6 @@ ul {
   }
 }
 
-/* Pagination Buttons */
 .pagination {
   display: flex;
   justify-content: center;

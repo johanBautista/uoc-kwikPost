@@ -104,7 +104,6 @@ export const usePostsStore = defineStore("posts", {
 
         const updatedPost: Post = await res.json();
 
-        // Actualitzar el post localment si existeix
         const index = this.posts.findIndex((p) => p.id === postId);
         if (index !== -1) this.posts[index] = updatedPost;
 

@@ -61,8 +61,6 @@ export const useUserStore = defineStore("user", {
         const data: PostsResponse = await res.json();
         this.posts = data.result;
 
-        console.log("Posts fetched:", this.posts);
-
         this.paginator = {
           ...data.paginator,
           limit: this.paginator.limit,
